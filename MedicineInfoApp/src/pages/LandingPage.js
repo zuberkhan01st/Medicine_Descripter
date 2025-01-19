@@ -17,6 +17,7 @@ const LandingPage = ({ navigation }) => {
   const scaleAnim = useRef(new Animated.Value(0.3)).current;
   const slideAnim = useRef(new Animated.Value(width)).current;
   const pulseAnim = useRef(new Animated.Value(1)).current;
+  const brandingAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     // Sequence of animations
@@ -40,6 +41,12 @@ const LandingPage = ({ navigation }) => {
         toValue: 0,
         duration: 800,
         easing: Easing.out(Easing.back(1.7)),
+        useNativeDriver: true,
+      }),
+      // Fade in branding
+      Animated.timing(brandingAnim, {
+        toValue: 1,
+        duration: 1000,
         useNativeDriver: true,
       }),
     ]).start();
@@ -127,6 +134,18 @@ const LandingPage = ({ navigation }) => {
               <Text style={styles.buttonIcon}>📷</Text>
               <Text style={styles.buttonText}>Upload Image</Text>
             </TouchableOpacity>
+          </Animated.View>
+
+          <Animated.View
+            style={[
+              styles.brandingWrapper,
+              {
+                opacity: brandingAnim,
+              },
+            ]}
+          >
+            <Text style={styles.productBranding}>A Health Genie Product</Text>
+            <Text style={styles.companyBranding}>Powered by ZK CREATIONS</Text>
           </Animated.View>
         </View>
 
@@ -284,6 +303,31 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 18,
     fontWeight: '600',
+  },
+  brandingWrapper: {
+    position: 'absolute',
+    bottom: 24,
+    width: '100%',
+    alignItems: 'center',
+  },
+  productBranding: {
+    fontSize: 16,
+    color: 'rgba(255, 255, 255, 0.9)',
+    fontWeight: '500',
+    letterSpacing: 1,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10,
+    marginBottom: 8,
+  },
+  companyBranding: {
+    fontSize: 14,
+    color: 'rgba(255, 255, 255, 0.8)',
+    fontWeight: '500',
+    letterSpacing: 1,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10,
   },
   floatingPill: {
     position: 'absolute',
