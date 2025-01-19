@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  Button, 
-  Image, 
-  StyleSheet, 
-  ScrollView, 
-  Alert, 
-  ActivityIndicator, 
-  Dimensions 
+import {
+  View,
+  Text,
+  Button,
+  Image,
+  StyleSheet,
+  ScrollView,
+  Alert,
+  ActivityIndicator,
+  Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -18,7 +19,7 @@ const API_URL = 'http://192.168.172.245:5001/api';
 const UploadImagePage = () => {
   const [image, setImage] = useState(null);
   const [medicineName, setMedicineName] = useState('Orlistat Capsules USP');
-  const [medicineDescription, setMedicineDescription] = useState(``);
+  const [medicineDescription, setMedicineDescription] = useState('');
   const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
   const [loading, setLoading] = useState(false);
 
@@ -83,8 +84,8 @@ const UploadImagePage = () => {
 
       if (response.ok) {
         const geminiText = data.geminiResponse?.candidates?.[0]?.content?.parts?.[0]?.text || 'No description available';
-        const name = data.medicineName || 'Unknown Medicine';
-        setMedicineName(name);
+        //const name = data.medicineName || 'Unknown Medicine';
+        //setMedicineName(name);
         setMedicineDescription(geminiText);
       } else {
         console.error('Error extracting text:', data.error);
@@ -136,6 +137,7 @@ const UploadImagePage = () => {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Medicine Details Extractor</Text>
 
+      {/* Image section */}
       {image && (
         <View style={styles.imageContainer}>
           <Text style={styles.sectionTitle}>Captured Image</Text>
@@ -146,16 +148,17 @@ const UploadImagePage = () => {
         </View>
       )}
 
-      <Button title="Open Camera" onPress={openCamera} />
+      {/* Camera button */}
+      <TouchableOpacity style={styles.cameraButton} onPress={openCamera}>
+        <Text style={styles.cameraButtonText}>Open Camera</Text>
+      </TouchableOpacity>
 
-      {loading && (
-        <ActivityIndicator size="large" color="#0000ff" style={styles.loadingIndicator} />
-      )}
+      {/* Loading indicator */}
+      {loading && <ActivityIndicator size="large" color="#0000ff" style={styles.loadingIndicator} />}
 
+      {/* Extracted details */}
       {!loading && medicineDescription && (
         <View style={styles.descriptionContainer}>
-          <Text style={styles.sectionTitle}>Extracted Details</Text>
-          <Text style={styles.boldText}>Medicine Name: {medicineName}</Text>
           <Text style={styles.sectionTitle}>Description:</Text>
           <ScrollView style={styles.textContainer}>
             {renderFormattedText(medicineDescription)}
@@ -173,7 +176,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   title: {
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
@@ -195,6 +198,24 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 8,
     backgroundColor: '#e0e0e0',
+  },
+  cameraButton: {
+    backgroundColor: '#4299e1',
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 20,
+    shadowColor: '#4299e1',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 4,
+  },
+  cameraButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#fff',
   },
   loadingIndicator: {
     position: 'absolute',
