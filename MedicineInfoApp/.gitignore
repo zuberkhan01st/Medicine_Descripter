@@ -1,0 +1,30 @@
+# Expo related
+.expo/
+.expo-shared/
+
+# Node modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+/dist/
+*.log
+
+# React Native specific
+# Android/IntelliJ specific files
+.android/
+.idea/
+.vscode/
+
+# macOS
+.DS_Store
+
+# Environment files
+.env
+
+# Expo production build artifacts
+app.json

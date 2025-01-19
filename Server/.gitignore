@@ -1,0 +1,45 @@
+# Node.js dependencies
+node_modules/
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+
+# Build output
+/dist
+/build
+/tmp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+
+# Package lock files (optional)
+package-lock.json
+yarn.lock
+
+# NPM log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage folder (for tests)
+coverage/
+
+# Optional: Exclude any sensitive or build-specific files (like if using Docker)
+Dockerfile
+docker-compose.yml
+
+# Exclude build directories if using Webpack or similar bundlers
+/public/
+
+# Miscellaneous
+*.tgz
